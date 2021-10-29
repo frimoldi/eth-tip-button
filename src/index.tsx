@@ -1,4 +1,4 @@
-import * as React from 'react'
+import React, { useState } from 'react'
 import { ethers } from 'ethers'
 import styles from './styles.module.css'
 
@@ -16,33 +16,44 @@ type ButtonProps = {
 }
 
 export const Button = ({ recipientAddress, children }: ButtonProps) => {
-  // const [account, setAccount] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleClick = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const accounts = await provider.listAccounts()
+    try {
+      setIsLoading(true)
 
-    if (accounts.length === 0) {
-      await provider.send('eth_requestAccounts', [])
+      const provider = new ethers.providers.Web3Provider(window.ethereum)
+      const accounts = await provider.listAccounts()
+
+      if (accounts.length === 0) {
+        await provider.send('eth_requestAccounts', [])
+      }
+
+      const signer = provider.getSigner()
+      const address = await signer.getAddress()
+
+      console.log(`Connected to ${address}`)
+
+      const tx = await signer.sendTransaction({
+        to: recipientAddress,
+        value: ethers.utils.parseEther('0.001')
+      })
+
+      console.log(tx)
+
+      const receipt = await tx.wait()
+
+      console.log(receipt)
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setIsLoading(false)
     }
-
-    const signer = await provider.getSigner()
-    const address = await signer.getAddress()
-
-    console.log(`Connected to ${address}`)
-
-    const tx = await signer.sendTransaction({
-      to: '0x9b43748a60954F36A6547C5d653951532Af242e6',
-      value: ethers.utils.parseEther('0.001')
-    })
-
-    console.log(tx)
-
-    const receipt = await tx.wait()
-
-    console.log(receipt)
   }
 
-  console.log(recipientAddress)
-  return <button onClick={handleClick}>{children}</button>
+  return (
+    <button onClick={handleClick} disabled={isLoading}>
+      {isLoading ? 'Loading ...' : children}
+    </button>
+  )
 }
