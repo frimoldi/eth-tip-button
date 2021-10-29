@@ -3,6 +3,8 @@
 node_modules/
 lib/
 build
+/example/node_modules
+/example/build
 .DS_Store
 *.tgz
 my-app*
