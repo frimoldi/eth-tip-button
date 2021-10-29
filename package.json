@@ -1,0 +1,11 @@
+{
+  "name": "eth-tip-button",
+  "version": "0.0.1",
+  "description": "A React button to receive ETH tips",
+  "main": "index.js",
+  "author": "frimoldi.eth",
+  "license": "MIT",
+  "devDependencies": {
+    "typescript": "^4.4.4"
+  }
+}
