@@ -9,13 +9,19 @@ type ButtonProps = {
   label: string
   loadingLabel?: string
   collapsedLabel: string
+  onTransactionSent?: (tx: ethers.providers.TransactionResponse) => void
+  onTransactionFinished?: (tx: ethers.providers.TransactionReceipt) => void
+  onError?: (error: Error) => void
 }
 
 export const Button = ({
   recipientAddress,
   label,
   loadingLabel = 'Loading ...',
-  collapsedLabel
+  collapsedLabel,
+  onTransactionSent,
+  onTransactionFinished,
+  onError
 }: ButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
@@ -39,22 +45,17 @@ export const Button = ({
       }
 
       const signer = provider.getSigner()
-      const address = await signer.getAddress()
-
-      console.log(`Connected to ${address}`)
 
       const tx = await signer.sendTransaction({
         to: recipientAddress,
         value: ethers.utils.parseEther(`${ethValue}`)
       })
-
-      console.log(tx)
+      onTransactionSent && onTransactionSent(tx)
 
       const receipt = await tx.wait()
-
-      console.log(receipt)
+      onTransactionFinished && onTransactionFinished(receipt)
     } catch (error) {
-      console.log(error)
+      onError && onError(error)
     } finally {
       setIsLoading(false)
     }
