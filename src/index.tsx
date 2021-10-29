@@ -1,14 +1,7 @@
 import React, { useState } from 'react'
 import { ethers } from 'ethers'
-import styles from './styles.module.css'
 
-interface Props {
-  text: string
-}
-
-export const ExampleComponent = ({ text }: Props) => {
-  return <div className={styles.test}>Example Component: {text}</div>
-}
+// import styles from './styles.module.css'
 
 type ButtonProps = {
   recipientAddress: string
@@ -17,6 +10,7 @@ type ButtonProps = {
 
 export const Button = ({ recipientAddress, children }: ButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [ethValue, setEthValue] = useState<number>(0.001)
 
   const handleClick = async () => {
     try {
@@ -36,7 +30,7 @@ export const Button = ({ recipientAddress, children }: ButtonProps) => {
 
       const tx = await signer.sendTransaction({
         to: recipientAddress,
-        value: ethers.utils.parseEther('0.001')
+        value: ethers.utils.parseEther(`${ethValue}`)
       })
 
       console.log(tx)
@@ -51,9 +45,23 @@ export const Button = ({ recipientAddress, children }: ButtonProps) => {
     }
   }
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault()
+    setEthValue(e.target.valueAsNumber)
+  }
+
   return (
-    <button onClick={handleClick} disabled={isLoading}>
-      {isLoading ? 'Loading ...' : children}
-    </button>
+    <div>
+      <input
+        type='number'
+        step={0.001}
+        value={ethValue}
+        onChange={handleChange}
+        disabled={isLoading}
+      />
+      <button onClick={handleClick} disabled={isLoading}>
+        {isLoading ? 'Loading ...' : children}
+      </button>
+    </div>
   )
 }
