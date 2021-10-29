@@ -7,6 +7,7 @@
   "types": "./lib/esm/index.d.ts",
   "author": "frimoldi.eth",
   "license": "MIT",
+  "files": ["/lib"],
   "scripts": {
     "build": "yarn build:esm && yarn build:cjs",
     "build:esm": "tsc",
