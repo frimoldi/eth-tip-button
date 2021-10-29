@@ -1,0 +1,21 @@
+$component-height: 44px;
+
+.container {
+  border: 1px solid black;
+}
+
+.input {
+  height: $component-height;
+  padding: 0;
+  border: none;
+}
+
+.button {
+  height: $component-height;
+  padding: 0;
+  border: none;
+
+  &:hover {
+    cursor: pointer;
+  }
+}

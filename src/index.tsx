@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { ethers } from 'ethers'
 
-// import styles from './styles.module.css'
+import styles from './styles.module.scss'
 
 type ButtonProps = {
   recipientAddress: string
@@ -51,15 +51,20 @@ export const Button = ({ recipientAddress, children }: ButtonProps) => {
   }
 
   return (
-    <div>
+    <div className={styles.container}>
       <input
+        className={styles.input}
         type='number'
         step={0.001}
         value={ethValue}
         onChange={handleChange}
         disabled={isLoading}
       />
-      <button onClick={handleClick} disabled={isLoading}>
+      <button
+        className={styles.button}
+        onClick={handleClick}
+        disabled={isLoading}
+      >
         {isLoading ? 'Loading ...' : children}
       </button>
     </div>
