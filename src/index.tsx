@@ -5,10 +5,15 @@ import styles from './styles.module.scss'
 
 type ButtonProps = {
   recipientAddress: string
-  children: React.ReactChild
+  label: string
+  loadingLabel?: string
 }
 
-export const Button = ({ recipientAddress, children }: ButtonProps) => {
+export const Button = ({
+  recipientAddress,
+  label,
+  loadingLabel = 'Loading ...'
+}: ButtonProps) => {
   const [isLoading, setIsLoading] = useState(false)
   const [ethValue, setEthValue] = useState<number>(0.001)
 
@@ -65,7 +70,7 @@ export const Button = ({ recipientAddress, children }: ButtonProps) => {
         onClick={handleClick}
         disabled={isLoading}
       >
-        {isLoading ? 'Loading ...' : children}
+        {isLoading ? loadingLabel : label}
       </button>
     </div>
   )
