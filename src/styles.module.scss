@@ -2,6 +2,7 @@ $component-height: 44px;
 
 .container {
   border: 1px solid black;
+  position: relative;
 }
 
 .input {
@@ -15,7 +16,40 @@ $component-height: 44px;
   padding: 0;
   border: none;
 
+  position: absolute;
+  left: 0;
+  width: 100%;
+
+  opacity: 1;
+
   &:hover {
     cursor: pointer;
+  }
+
+  &EnterActive {
+    left: 70%;
+    width: 30%;
+    transition: left 200ms ease-out, width 200ms ease-out;
+  }
+
+  &EnterDone {
+    left: 70%;
+    width: 30%;
+  }
+
+  &Exit {
+    left: 70%;
+    width: 30%;
+  }
+
+  &ExitActive {
+    left: 0;
+    width: 100%;
+    transition: left 200ms ease-out, width 200ms ease-out;
+  }
+
+  &ExitDone {
+    left: 0;
+    width: 100%;
   }
 }

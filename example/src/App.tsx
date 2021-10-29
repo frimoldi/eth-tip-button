@@ -17,6 +17,7 @@ const App = () => {
       <Button
         recipientAddress='0x9b43748a60954F36A6547C5d653951532Af242e6'
         label='Send me ETH!'
+        collapsedLabel='Send'
       />
     </div>
   )
