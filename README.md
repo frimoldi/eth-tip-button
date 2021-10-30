@@ -31,6 +31,10 @@ const Example = () => {
     )
 }
 ```
+
+## Demo
+![Demo](http://g.recordit.co/juAUE0Oukj.gif)
+
 ## License
 
 MIT © [frimoldi.eth](https://github.com/frimoldi)
