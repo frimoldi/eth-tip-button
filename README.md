@@ -9,22 +9,28 @@
 ```bash
 npm install --save eth-tip-button
 ```
+```bash
+yarn add eth-tip-button
+```
 
 ## Usage
 
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'eth-tip-button'
-import 'eth-tip-button/dist/index.css'
+import { Button } from 'eth-tip-button'
 
-class Example extends Component {
-  render() {
-    return <MyComponent />
-  }
+const Example = () => {
+    return (
+      <Button
+        recipientAddress="<YOUR_ETH_ADDRESS>"
+        label="Tip me some ETH"
+        onTransactionFinished={(tx) => console.log("Done! Transaction finished: ", tx)}
+        onError={(error) => console.log("Something went wrong: ", error)}
+      />
+    )
 }
 ```
-
 ## License
 
-MIT © [frimoldi.eth](https://github.com/frimoldi.eth)
+MIT © [frimoldi.eth](https://github.com/frimoldi)
