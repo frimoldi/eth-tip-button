@@ -16,7 +16,7 @@ yarn add eth-tip-button
 ## Usage
 
 ```tsx
-import React, { Component } from 'react'
+import React from 'react'
 
 import { Button } from 'eth-tip-button'
 
