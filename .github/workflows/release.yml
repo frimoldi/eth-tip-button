@@ -21,9 +21,9 @@ jobs:
       - name: Install semantic-release extra plugins
         run: yarn add --dev @semantic-release/changelog @semantic-release/git
       - name: Lint
-        run: yarn test:lint
+        run: yarn lint
       - name: Test
-        run: yarn test:unit --if-present
+        run: yarn test
       - name: Build
         run: yarn build
       - name: Release
