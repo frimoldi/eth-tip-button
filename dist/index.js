@@ -24,42 +24,23 @@ function _catch(body, recover) {
 	return result;
 }
 
-// Asynchronously await a promise and pass the result to a finally continuation
-function _finallyRethrows(body, finalizer) {
-	try {
-		var result = body();
-	} catch (e) {
-		return finalizer(true, e);
-	}
-	if (result && result.then) {
-		return result.then(finalizer.bind(null, false), finalizer.bind(null, true));
-	}
-	return finalizer(false, result);
-}
-
-var styles = {"container":"_3IMWP","input":"_ozRAq","button":"_3wODo","buttonEnterActive":"_2zvQw","buttonEnterDone":"_3Vs4V","buttonExit":"_1dphn","buttonExitActive":"_52QBs","buttonExitDone":"_1WkqM"};
+var styles = {"container":"_styles-module__container__3IMWP","input":"_styles-module__input__ozRAq","button":"_styles-module__button__3wODo","buttonEnterActive":"_styles-module__buttonEnterActive__2zvQw","buttonEnterDone":"_styles-module__buttonEnterDone__3Vs4V","buttonExit":"_styles-module__buttonExit__1dphn","buttonExitActive":"_styles-module__buttonExitActive__52QBs","buttonExitDone":"_styles-module__buttonExitDone__1WkqM"};
 
 var Button = function Button(_ref) {
   var recipientAddress = _ref.recipientAddress,
       label = _ref.label,
-      _ref$loadingLabel = _ref.loadingLabel,
-      loadingLabel = _ref$loadingLabel === void 0 ? 'Loading ...' : _ref$loadingLabel,
       collapsedLabel = _ref.collapsedLabel,
       onTransactionSent = _ref.onTransactionSent,
       onTransactionFinished = _ref.onTransactionFinished,
       onError = _ref.onError;
 
-  var _useState = React.useState(false),
-      isLoading = _useState[0],
-      setIsLoading = _useState[1];
+  var _useState = React.useState(true),
+      isExpanded = _useState[0],
+      setIsExpanded = _useState[1];
 
-  var _useState2 = React.useState(true),
-      isExpanded = _useState2[0],
-      setIsExpanded = _useState2[1];
-
-  var _useState3 = React.useState(0.001),
-      ethValue = _useState3[0],
-      setEthValue = _useState3[1];
+  var _useState2 = React.useState(0.001),
+      ethValue = _useState2[0],
+      setEthValue = _useState2[1];
 
   var handleClick = function handleClick() {
     try {
@@ -68,40 +49,33 @@ var Button = function Button(_ref) {
         return Promise.resolve();
       }
 
-      var _temp4 = _finallyRethrows(function () {
-        return _catch(function () {
-          setIsLoading(true);
-          setIsExpanded(true);
-          var provider = new ethers.ethers.providers.Web3Provider(window.ethereum);
-          return Promise.resolve(provider.listAccounts()).then(function (accounts) {
-            function _temp2() {
-              var signer = provider.getSigner();
-              return Promise.resolve(signer.sendTransaction({
-                to: recipientAddress,
-                value: ethers.ethers.utils.parseEther("" + ethValue)
-              })).then(function (tx) {
-                onTransactionSent && onTransactionSent(tx);
-                return Promise.resolve(tx.wait()).then(function (receipt) {
-                  onTransactionFinished && onTransactionFinished(receipt);
-                });
+      var _temp4 = _catch(function () {
+        setIsExpanded(true);
+        var provider = new ethers.ethers.providers.Web3Provider(window.ethereum);
+        return Promise.resolve(provider.listAccounts()).then(function (accounts) {
+          function _temp2() {
+            var signer = provider.getSigner();
+            return Promise.resolve(signer.sendTransaction({
+              to: recipientAddress,
+              value: ethers.ethers.utils.parseEther("" + ethValue)
+            })).then(function (tx) {
+              onTransactionSent && onTransactionSent(tx);
+              return Promise.resolve(tx.wait()).then(function (receipt) {
+                onTransactionFinished && onTransactionFinished(receipt);
               });
+            });
+          }
+
+          var _temp = function () {
+            if (accounts.length === 0) {
+              return Promise.resolve(provider.send('eth_requestAccounts', [])).then(function () {});
             }
+          }();
 
-            var _temp = function () {
-              if (accounts.length === 0) {
-                return Promise.resolve(provider.send('eth_requestAccounts', [])).then(function () {});
-              }
-            }();
-
-            return _temp && _temp.then ? _temp.then(_temp2) : _temp2(_temp);
-          });
-        }, function (error) {
-          onError && onError(error);
+          return _temp && _temp.then ? _temp.then(_temp2) : _temp2(_temp);
         });
-      }, function (_wasThrown, _result) {
-        setIsLoading(false);
-        if (_wasThrown) throw _result;
-        return _result;
+      }, function (error) {
+        onError && onError(error);
       });
 
       return Promise.resolve(_temp4 && _temp4.then ? _temp4.then(function () {}) : void 0);
@@ -122,8 +96,7 @@ var Button = function Button(_ref) {
     type: 'number',
     step: 0.001,
     value: ethValue,
-    onChange: handleChange,
-    disabled: isLoading
+    onChange: handleChange
   }), React__default.createElement(reactTransitionGroup.CSSTransition, {
     "in": !isExpanded,
     timeout: 200,
@@ -136,9 +109,8 @@ var Button = function Button(_ref) {
     }
   }, React__default.createElement("button", {
     className: styles.button,
-    onClick: handleClick,
-    disabled: isLoading
-  }, isLoading ? loadingLabel : isExpanded ? label : collapsedLabel)));
+    onClick: handleClick
+  }, isExpanded ? label : collapsedLabel)));
 };
 
 exports.Button = Button;
