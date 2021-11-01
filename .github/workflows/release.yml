@@ -18,6 +18,8 @@ jobs:
           node-version: 14.17.x
       - name: Install dependencies
         run: npx ci
+      - name: Install example dependencies
+        run: cd ./example && yarn
       - name: Install semantic-release extra plugins
         run: yarn add --dev @semantic-release/changelog @semantic-release/git
       - name: Lint
