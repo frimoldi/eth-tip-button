@@ -23,7 +23,7 @@ module.exports = {
         assets: ['CHANGELOG.md', 'dist/**'],
         message:
           // eslint-disable-next-line
-          'chore(release): set package.json to ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}'
+          'chore(release): set package.json to ${nextRelease.version} [skip ci]'
       }
     ]
   ]
