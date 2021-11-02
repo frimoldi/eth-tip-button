@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/frimoldi/eth-tip-button/compare/v1.0.2...v1.1.0) (2021-11-02)
+
+
+### Features
+
+* remove loading state ([#2](https://github.com/frimoldi/eth-tip-button/issues/2)) ([b169f35](https://github.com/frimoldi/eth-tip-button/commit/b169f353b5c7a38bf692d101917fbef794b7506a))
+
 ## [1.0.2](https://github.com/frimoldi/eth-tip-button/compare/v1.0.1...v1.0.2) (2021-11-01)
 
 

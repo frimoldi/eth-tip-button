@@ -1,10 +1,10 @@
-._styles-module__container__3IMWP {
+._3IMWP {
   border: 1px solid #507dbc;
   position: relative;
   border-radius: 5px;
   overflow: hidden; }
 
-._styles-module__input__ozRAq {
+._ozRAq {
   height: 50px;
   padding: 0;
   border: none;
@@ -12,7 +12,7 @@
   color: #04080f;
   font-size: 1.5em; }
 
-._styles-module__button__3wODo {
+._3wODo {
   height: 50px;
   padding: 0;
   border: none;
@@ -22,22 +22,22 @@
   position: absolute;
   left: 0;
   width: 100%; }
-  ._styles-module__button__3wODo:hover {
+  ._3wODo:hover {
     cursor: pointer; }
-  ._styles-module__buttonEnterActive__2zvQw {
+  ._2zvQw {
     left: 70%;
     width: 30%;
     transition: left 200ms ease-out, width 200ms ease-out; }
-  ._styles-module__buttonEnterDone__3Vs4V {
+  ._3Vs4V {
     left: 70%;
     width: 30%; }
-  ._styles-module__buttonExit__1dphn {
+  ._1dphn {
     left: 70%;
     width: 30%; }
-  ._styles-module__buttonExitActive__52QBs {
+  ._52QBs {
     left: 0;
     width: 100%;
     transition: left 200ms ease-out, width 200ms ease-out; }
-  ._styles-module__buttonExitDone__1WkqM {
+  ._1WkqM {
     left: 0;
     width: 100%; }

@@ -2,48 +2,86 @@ import React, { useState } from 'react';
 import { ethers } from 'ethers';
 import { CSSTransition } from 'react-transition-group';
 
-var styles = {"container":"_styles-module__container__3IMWP","input":"_styles-module__input__ozRAq","button":"_styles-module__button__3wODo","buttonEnterActive":"_styles-module__buttonEnterActive__2zvQw","buttonEnterDone":"_styles-module__buttonEnterDone__3Vs4V","buttonExit":"_styles-module__buttonExit__1dphn","buttonExitActive":"_styles-module__buttonExitActive__52QBs","buttonExitDone":"_styles-module__buttonExitDone__1WkqM"};
+// A type of promise-like that resolves synchronously and supports only one observer
 
-const Button = ({
-  recipientAddress,
-  label,
-  collapsedLabel,
-  onTransactionSent,
-  onTransactionFinished,
-  onError
-}) => {
-  const [isExpanded, setIsExpanded] = useState(true);
-  const [ethValue, setEthValue] = useState(0.001);
+const _iteratorSymbol = /*#__PURE__*/ typeof Symbol !== "undefined" ? (Symbol.iterator || (Symbol.iterator = Symbol("Symbol.iterator"))) : "@@iterator";
 
-  const handleClick = async () => {
-    if (isExpanded) {
-      setIsExpanded(false);
-      return;
-    }
+const _asyncIteratorSymbol = /*#__PURE__*/ typeof Symbol !== "undefined" ? (Symbol.asyncIterator || (Symbol.asyncIterator = Symbol("Symbol.asyncIterator"))) : "@@asyncIterator";
 
+// Asynchronously call a function and send errors to recovery continuation
+function _catch(body, recover) {
+	try {
+		var result = body();
+	} catch(e) {
+		return recover(e);
+	}
+	if (result && result.then) {
+		return result.then(void 0, recover);
+	}
+	return result;
+}
+
+var styles = {"container":"_3IMWP","input":"_ozRAq","button":"_3wODo","buttonEnterActive":"_2zvQw","buttonEnterDone":"_3Vs4V","buttonExit":"_1dphn","buttonExitActive":"_52QBs","buttonExitDone":"_1WkqM"};
+
+var Button = function Button(_ref) {
+  var recipientAddress = _ref.recipientAddress,
+      label = _ref.label,
+      collapsedLabel = _ref.collapsedLabel,
+      onTransactionSent = _ref.onTransactionSent,
+      onTransactionFinished = _ref.onTransactionFinished,
+      onError = _ref.onError;
+
+  var _useState = useState(true),
+      isExpanded = _useState[0],
+      setIsExpanded = _useState[1];
+
+  var _useState2 = useState(0.001),
+      ethValue = _useState2[0],
+      setEthValue = _useState2[1];
+
+  var handleClick = function handleClick() {
     try {
-      setIsExpanded(true);
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
-      const accounts = await provider.listAccounts();
-
-      if (accounts.length === 0) {
-        await provider.send('eth_requestAccounts', []);
+      if (isExpanded) {
+        setIsExpanded(false);
+        return Promise.resolve();
       }
 
-      const signer = provider.getSigner();
-      const tx = await signer.sendTransaction({
-        to: recipientAddress,
-        value: ethers.utils.parseEther(`${ethValue}`)
+      var _temp4 = _catch(function () {
+        setIsExpanded(true);
+        var provider = new ethers.providers.Web3Provider(window.ethereum);
+        return Promise.resolve(provider.listAccounts()).then(function (accounts) {
+          function _temp2() {
+            var signer = provider.getSigner();
+            return Promise.resolve(signer.sendTransaction({
+              to: recipientAddress,
+              value: ethers.utils.parseEther("" + ethValue)
+            })).then(function (tx) {
+              onTransactionSent && onTransactionSent(tx);
+              return Promise.resolve(tx.wait()).then(function (receipt) {
+                onTransactionFinished && onTransactionFinished(receipt);
+              });
+            });
+          }
+
+          var _temp = function () {
+            if (accounts.length === 0) {
+              return Promise.resolve(provider.send('eth_requestAccounts', [])).then(function () {});
+            }
+          }();
+
+          return _temp && _temp.then ? _temp.then(_temp2) : _temp2(_temp);
+        });
+      }, function (error) {
+        onError && onError(error);
       });
-      onTransactionSent && onTransactionSent(tx);
-      const receipt = await tx.wait();
-      onTransactionFinished && onTransactionFinished(receipt);
-    } catch (error) {
-      onError && onError(error);
+
+      return Promise.resolve(_temp4 && _temp4.then ? _temp4.then(function () {}) : void 0);
+    } catch (e) {
+      return Promise.reject(e);
     }
   };
 
-  const handleChange = e => {
+  var handleChange = function handleChange(e) {
     e.preventDefault();
     setEthValue(e.target.valueAsNumber);
   };
@@ -57,7 +95,7 @@ const Button = ({
     value: ethValue,
     onChange: handleChange
   }), React.createElement(CSSTransition, {
-    in: !isExpanded,
+    "in": !isExpanded,
     timeout: 200,
     classNames: {
       enterActive: styles.buttonEnterActive,
