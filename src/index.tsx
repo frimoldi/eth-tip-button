@@ -7,7 +7,6 @@ import styles from './styles.module.scss'
 type ButtonProps = {
   recipientAddress: string
   label: string
-  loadingLabel?: string
   collapsedLabel: string
   onTransactionSent?: (tx: ethers.providers.TransactionResponse) => void
   onTransactionFinished?: (tx: ethers.providers.TransactionReceipt) => void
@@ -17,13 +16,11 @@ type ButtonProps = {
 export const Button = ({
   recipientAddress,
   label,
-  loadingLabel = 'Loading ...',
   collapsedLabel,
   onTransactionSent,
   onTransactionFinished,
   onError
 }: ButtonProps) => {
-  const [isLoading, setIsLoading] = useState(false)
   const [isExpanded, setIsExpanded] = useState(true)
   const [ethValue, setEthValue] = useState<number>(0.001)
 
@@ -34,7 +31,6 @@ export const Button = ({
     }
 
     try {
-      setIsLoading(true)
       setIsExpanded(true)
 
       const provider = new ethers.providers.Web3Provider(window.ethereum)
@@ -56,8 +52,6 @@ export const Button = ({
       onTransactionFinished && onTransactionFinished(receipt)
     } catch (error) {
       onError && onError(error)
-    } finally {
-      setIsLoading(false)
     }
   }
 
@@ -74,7 +68,6 @@ export const Button = ({
         step={0.001}
         value={ethValue}
         onChange={handleChange}
-        disabled={isLoading}
       />
       <CSSTransition
         in={!isExpanded}
@@ -87,12 +80,8 @@ export const Button = ({
           exit: styles.buttonExit
         }}
       >
-        <button
-          className={styles.button}
-          onClick={handleClick}
-          disabled={isLoading}
-        >
-          {isLoading ? loadingLabel : isExpanded ? label : collapsedLabel}
+        <button className={styles.button} onClick={handleClick}>
+          {isExpanded ? label : collapsedLabel}
         </button>
       </CSSTransition>
     </div>
