@@ -24,7 +24,7 @@ function _catch(body, recover) {
 	return result;
 }
 
-var styles = {"container":"_styles-module__container__3IMWP","input":"_styles-module__input__ozRAq","button":"_styles-module__button__3wODo","buttonEnterActive":"_styles-module__buttonEnterActive__2zvQw","buttonEnterDone":"_styles-module__buttonEnterDone__3Vs4V","buttonExit":"_styles-module__buttonExit__1dphn","buttonExitActive":"_styles-module__buttonExitActive__52QBs","buttonExitDone":"_styles-module__buttonExitDone__1WkqM"};
+var styles = {"container":"_3IMWP","input":"_ozRAq","button":"_3wODo","buttonEnterActive":"_2zvQw","buttonEnterDone":"_3Vs4V","buttonExit":"_1dphn","buttonExitActive":"_52QBs","buttonExitDone":"_1WkqM"};
 
 var Button = function Button(_ref) {
   var recipientAddress = _ref.recipientAddress,
