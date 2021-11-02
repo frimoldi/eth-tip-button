@@ -23,17 +23,25 @@ import { Button } from 'eth-tip-button'
 const Example = () => {
     return (
       <Button
-        recipientAddress="<YOUR_ETH_ADDRESS>"
-        label="Tip me some ETH"
-        onTransactionFinished={(tx) => console.log("Done! Transaction finished: ", tx)}
-        onError={(error) => console.log("Something went wrong: ", error)}
+        recipientAddress='<YOUR_ETH_ADDRESS>'
+        label='Send me ETH!'
+        collapsedLabel='Send'
+        onTransactionSent={(tx) => {
+          console.log('Transaction sent: ', tx)
+        }}
+        onTransactionFinished={(tx) => {
+          console.log('Transaction finished: ', tx)
+        }}
+        onError={(error) => {
+          console.log('Something went wrong: ', error)
+        }}
       />
     )
 }
 ```
 
 ## Demo
-![Demo](http://g.recordit.co/juAUE0Oukj.gif)
+![Demo](http://g.recordit.co/Mcc2iQ9fOF.gif)
 
 ## License
 

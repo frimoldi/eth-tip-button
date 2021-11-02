@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Button } from 'eth-tip-button'
 import 'eth-tip-button/dist/index.css'
